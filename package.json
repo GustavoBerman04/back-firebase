@@ -20,6 +20,7 @@
   "homepage": "https://github.com/GustavoBerman04/back-firebase#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express.js": "^1.0.0",
     "firebase": "^9.17.1"
