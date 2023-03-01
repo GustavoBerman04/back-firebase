@@ -1,7 +1,7 @@
 const express = require('express')
 const bcrypt = require('bcrypt')
 const { initializeApp } = require('firebase/app')
-const { getFirestore, collection, getDoc, doc, setDoc, getDocs } = require('firebase/firestore')
+const { getFirestore, collection, getDoc, doc, setDoc, getDocs, deleteDoc, updateDoc } = require('firebase/firestore')
 const cors = require('cors')
 require("dotenv/config")
 
@@ -132,7 +132,7 @@ const firebaseConfig = {
 })
 
   app.post('/delete', (req, res) => {
-    let { id } = req.body
+    let { email } = req.body
 
     deleteDoc(doc(collection(db, 'users'), email))
     .then((response) => {
@@ -148,7 +148,7 @@ const firebaseConfig = {
   })
 
   app.post('/update', (req, res) => {
-    const { id, name, lastname, number } = req.body
+    const { email, name, lastname, number } = req.body
 
     //validaciones de datos
     if(name.length < 3) {
@@ -164,13 +164,13 @@ const firebaseConfig = {
         'alert': 'introduce un numero telefonico correcto'
       })
     } else { 
-      db.collection('users').doc(id)
+      const updateUser = collection(db, 'users')
       const updateData = {
         name,
         lastname,
         number
       }
-      updateDoc(doc(db, 'users'), updateData, id)
+      updateDoc(doc(updateUser, email), updateData, email)
       .then((response) => {
         res.json({
           'alert': 'success'
